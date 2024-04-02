@@ -15,16 +15,20 @@
   systemctl enable nfs-server
 ```
 - Install NFS utilities in all of the nodes in the cluster.
+
   yum install nfs-utils -y
 
 - Add the Repo, and update
+
   helm repo add nfs-subdir-external-provisioner https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner
   helm repo update
 
 - Install the helm release, change the IPAddress to NFS server IP, and path as per the env.
+
   helm install nfs-subdir-external-provisioner nfs-subdir-external-provisioner/nfs-subdir-external-provisioner --set nfs.server=172.31.36.141 --set nfs.path=/var/nfs/general
 
 - Make the SC nfs-client as default
+
   kubectl patch storageclass nfs-client -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 
 
