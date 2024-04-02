@@ -29,13 +29,12 @@
 
 
 ## Install Prometheus, Grafana
-
+```
 kubectl create ns monitoring
-
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
 helm install prometheus prometheus-community/kube-prometheus-stack --namespace monitoring -f kube-prometheus-stack_values.yaml
-
+```
 ## Download the mke.toml file, change the cadvisor value to true, and then upload the mke.toml. This will install the cadvisor as a daemonset in kube-system.
 
 - Define the following environment variables:
@@ -56,17 +55,19 @@ helm install prometheus prometheus-community/kube-prometheus-stack --namespace m
   Upload the newly edited MKE configuration file:
   curl --silent --insecure -X PUT -H "accept: application/toml" -H "Authorization: Bearer $AUTHTOKEN" --upload-file 'mke-config.toml' https://$MKE_HOST/api/ucp/config-toml
 
-# Install the Cadvisor for container metrics
-
+## Install the Cadvisor for container metrics
+```
 Install the Cadvisor ServiceMonitor
 kubectl apply -f cadvisor-servicemonitor.yaml
-
+```
 ## Install Loki
+```
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
 helm install loki grafana/loki-stack -f loki-stack_values.yaml -n monitoring
+```
 
+## Login to Grafana, with default admin/admin123 add the prometheus as a datasource
 
-## Login to Grafana, add the prometheus as a datasource
-http://prometheus-kube-prometheus-prometheus:9090
-Add the dashboard, 15758, 15757, 15760, 15759
+- http://prometheus-kube-prometheus-prometheus:9090
+- Add the dashboard, 15758, 15757, 15760, 15759
