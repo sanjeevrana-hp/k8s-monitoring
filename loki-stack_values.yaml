@@ -24,6 +24,13 @@ loki:
    storageClassName: nfs-client
   nodeSelector:
      kubernetes.io/os: linux
+  resources:
+    limits:
+      cpu: 400m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 128Mi
   affinity:
     podAffinity:
       requiredDuringSchedulingIgnoredDuringExecution:
@@ -63,6 +70,19 @@ grafana:
     targetPort: 3000
   defaultDashboardsTimezone: utc
   adminPassword: admin123
+  persistence:
+    enabled: false
+    accessModes:
+    - ReadWriteOnce
+    size: 5Gi
+  resources:
+    limits:
+      cpu: 400m
+      memory: 256Mi
+    requests:
+      cpu: 200m
+      memory: 128Mi
+
   outputs:
     main: |-
       output {
