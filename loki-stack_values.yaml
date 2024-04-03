@@ -1,4 +1,7 @@
 loki:
+  image:
+    repository: grafana/loki
+    tag: 2.9.5
   enabled: true
   isDefault: true
   url: http://{{(include "loki.serviceName" .)}}:{{ .Values.loki.service.port }}
@@ -51,7 +54,7 @@ grafana:
       enabled: true
       maxLines: 1000
   image:
-    tag: 10.3.3
+    tag: 10.4.0
   service:
     enabled: true
     type: NodePort
